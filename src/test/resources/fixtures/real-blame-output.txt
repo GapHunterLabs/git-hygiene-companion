@@ -1,0 +1,52 @@
+8388c4b27a9926cab1820fe0bbd43b96bd9e2bc5 1 1 4
+author Gap Hunter Labs
+author-mail <superkennydiaz@gmail.com>
+author-time 1785104021
+author-tz -0500
+committer Gap Hunter Labs
+committer-mail <superkennydiaz@gmail.com>
+committer-time 1785104021
+committer-tz -0500
+summary Cert Companion 0.1.0: X.509 certificate and keystore viewer
+boundary
+filename README.md
+	# Cert Companion
+8388c4b27a9926cab1820fe0bbd43b96bd9e2bc5 2 2
+author Gap Hunter Labs
+author-mail <superkennydiaz@gmail.com>
+author-time 1785104021
+author-tz -0500
+committer Gap Hunter Labs
+committer-mail <superkennydiaz@gmail.com>
+committer-time 1785104021
+committer-tz -0500
+summary Cert Companion 0.1.0: X.509 certificate and keystore viewer
+boundary
+filename README.md
+	
+8388c4b27a9926cab1820fe0bbd43b96bd9e2bc5 3 3
+author Gap Hunter Labs
+author-mail <superkennydiaz@gmail.com>
+author-time 1785104021
+author-tz -0500
+committer Gap Hunter Labs
+committer-mail <superkennydiaz@gmail.com>
+committer-time 1785104021
+committer-tz -0500
+summary Cert Companion 0.1.0: X.509 certificate and keystore viewer
+boundary
+filename README.md
+	IntelliJ-family plugin. A native, client-side viewer for X.509 certificates
+8388c4b27a9926cab1820fe0bbd43b96bd9e2bc5 4 4
+author Gap Hunter Labs
+author-mail <superkennydiaz@gmail.com>
+author-time 1785104021
+author-tz -0500
+committer Gap Hunter Labs
+committer-mail <superkennydiaz@gmail.com>
+committer-time 1785104021
+committer-tz -0500
+summary Cert Companion 0.1.0: X.509 certificate and keystore viewer
+boundary
+filename README.md
+	and keystores — decode a `.pem`, `.crt`, `.cer`, `.der`, `.jks`, `.p12`, or

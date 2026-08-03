@@ -1,0 +1,321 @@
+882fa3dc5af44ec3a24848327911691a74acd9d8 1 1 6
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	package com.acmecorp.payment;
+882fa3dc5af44ec3a24848327911691a74acd9d8 2 2
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	
+882fa3dc5af44ec3a24848327911691a74acd9d8 3 3
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	import java.math.BigDecimal;
+882fa3dc5af44ec3a24848327911691a74acd9d8 4 4
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	
+882fa3dc5af44ec3a24848327911691a74acd9d8 5 5
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	public class PaymentProcessor {
+882fa3dc5af44ec3a24848327911691a74acd9d8 6 6
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	
+b03ceed171191d81a00c21a037754f3236847938 7 7 1
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1781559900
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1781559900
+committer-tz -0500
+summary Raise max charge limit to 75k per compliance request
+previous 5c65a51521c01fed0f7ba7253e12735279e4a4f7 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	    private static final BigDecimal MAX_CHARGE = BigDecimal.valueOf(75_000);
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 8 8 1
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	
+882fa3dc5af44ec3a24848327911691a74acd9d8 7 9 5
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	    public BigDecimal charge(String customerId, BigDecimal amount) {
+882fa3dc5af44ec3a24848327911691a74acd9d8 8 10
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	        validate(amount);
+882fa3dc5af44ec3a24848327911691a74acd9d8 9 11
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	        return amount;
+882fa3dc5af44ec3a24848327911691a74acd9d8 10 12
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	    }
+882fa3dc5af44ec3a24848327911691a74acd9d8 11 13
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 14 14 4
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	    public RefundHandler refundHandlerFor(String customerId) {
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 15 15
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	        return new RefundHandler(customerId);
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 16 16
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	    }
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 17 17
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	
+882fa3dc5af44ec3a24848327911691a74acd9d8 12 18 4
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	    private void validate(BigDecimal amount) {
+882fa3dc5af44ec3a24848327911691a74acd9d8 13 19
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+882fa3dc5af44ec3a24848327911691a74acd9d8 14 20
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	            throw new IllegalArgumentException("Amount must be positive");
+882fa3dc5af44ec3a24848327911691a74acd9d8 15 21
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	        }
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 22 22 3
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	        if (amount.compareTo(MAX_CHARGE) > 0) {
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 23 23
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	            throw new IllegalArgumentException("Amount exceeds maximum single charge");
+5c65a51521c01fed0f7ba7253e12735279e4a4f7 24 24
+author Grace Hopper
+author-mail <grace@example.com>
+author-time 1781108100
+author-tz -0500
+committer Grace Hopper
+committer-mail <grace@example.com>
+committer-time 1781108100
+committer-tz -0500
+summary Add RefundHandler and enforce max charge limit
+previous 882fa3dc5af44ec3a24848327911691a74acd9d8 src/payment/PaymentProcessor.java
+filename src/payment/PaymentProcessor.java
+	        }
+882fa3dc5af44ec3a24848327911691a74acd9d8 16 25 2
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	    }
+882fa3dc5af44ec3a24848327911691a74acd9d8 17 26
+author Ada Lovelace
+author-mail <ada@example.com>
+author-time 1780428600
+author-tz -0500
+committer Ada Lovelace
+committer-mail <ada@example.com>
+committer-time 1780428600
+committer-tz -0500
+summary Add PaymentProcessor with basic charge validation
+filename src/payment/PaymentProcessor.java
+	}
