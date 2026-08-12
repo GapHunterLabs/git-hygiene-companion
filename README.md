@@ -53,7 +53,7 @@ Settings > Tools > Git Hygiene Companion.
 ## Enterprise / Team Licensing
 
 Need enterprise features, custom git workflows, or team licensing?
-Contact us at **kennyj.diazm@gmail.com**.
+Contact us at **gaphunterlabs@gmail.com**.
 
 ## Development
 
