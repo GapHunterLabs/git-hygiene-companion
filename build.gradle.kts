@@ -49,4 +49,19 @@ intellijPlatform {
             VerifyPluginTask.FailureLevel.SCHEDULED_FOR_REMOVAL_API_USAGES,
         )
     }
+    // publishPlugin credentials -- token/cert/key read from
+    // ~/.gradle/gradle.properties (self-signed cert generated once for
+    // the whole catalog, 10-year validity) -- never in this file. This
+    // repo was one of the 6 in the catalog scaffolded without this block
+    // (see workstream-1-catalogo plan, Fase 0 inventory); added now,
+    // same pattern as every other plugin.
+    publishing {
+        token.set(providers.gradleProperty("gapHunterLabs.marketplace.token"))
+    }
+
+    signing {
+        certificateChain.set(providers.gradleProperty("gapHunterLabs.marketplace.certificateChain"))
+        privateKey.set(providers.gradleProperty("gapHunterLabs.marketplace.privateKey"))
+        password.set(providers.gradleProperty("gapHunterLabs.marketplace.privateKeyPassword"))
+    }
 }
