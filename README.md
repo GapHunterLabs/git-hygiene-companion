@@ -82,10 +82,13 @@ Contact us at **gaphunterlabs@gmail.com**.
 ./gradlew verifyPlugin   # checks compatibility against real IDEs
 ```
 
-`demo/` is a real, `git init`'d repository with several real commits
-under different simulated authors/dates — blame has nothing to show
-without real git history, so this is genuine repo setup, not build
-output.
+`demo/` is a real git repository with several real commits under
+different simulated authors/dates — blame has nothing to show without
+real git history, so this is genuine repo setup, not build output. It
+is a git submodule
+([git-hygiene-companion-demo](https://github.com/GapHunterLabs/git-hygiene-companion-demo));
+after cloning, fetch it with `git submodule update --init` (some tests
+read it).
 
 ## License
 
