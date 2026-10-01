@@ -57,6 +57,26 @@ class GitHeadStampTest {
     }
 
     @Test
+    fun `refresh updates the paint-path sample so the repaint it triggers sees the same stamp`() {
+        val t0 = 1_000_000_000L
+        val before = GitHeadStamp.of(repo.dir, nowNanos = t0)
+        Thread.sleep(50)
+        repo.write("README.md", "# billing\n")
+        repo.commitAll("second")
+        val refreshed = GitHeadStamp.refresh(repo.dir, nowNanos = t0 + 1_000L)
+        assertNotEquals(before, refreshed)
+        assertEquals("Within the interval the paint path now reads the refreshed stamp", refreshed, GitHeadStamp.of(repo.dir, nowNanos = t0 + 2_000L))
+    }
+
+    @Test
+    fun `newest change is recent right after a commit`() {
+        repo.write("README.md", "# billing\n")
+        repo.commitAll("second")
+        val ageMs = System.currentTimeMillis() - GitHeadStamp.newestChangeMillis(repo.dir)
+        assert(ageMs in 0..5_000) { "Stamped files should have just changed, age ${ageMs}ms" }
+    }
+
+    @Test
     fun `the paint-path stamp is reused within the interval and refreshed after it`() {
         val t0 = 1_000_000_000L
         val first = GitHeadStamp.of(repo.dir, nowNanos = t0)

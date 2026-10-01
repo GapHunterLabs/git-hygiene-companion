@@ -45,16 +45,42 @@ object GitHeadStamp {
         return stamp
     }
 
+    /**
+     * Fresh signature, also remembered as the paint path's sample: the
+     * background task calls this, so the repaint it triggers compares
+     * against the same stamp it stored (otherwise a paint inside the
+     * interval would still hold the pre-commit sample, miss, and schedule
+     * the task again).
+     */
+    fun refresh(repoDirectory: File, nowNanos: Long = System.nanoTime()): Long {
+        val stamp = compute(repoDirectory)
+        samples[repoDirectory.path] = Sample(nowNanos, stamp)
+        return stamp
+    }
+
     /** Uncached signature; [of] is what the paint path uses. */
     fun compute(repoDirectory: File): Long {
         val gitDir = File(repoDirectory, ".git")
         if (!gitDir.isDirectory) return 0L
         var stamp = 17L
-        for (path in listOf("HEAD", "logs/HEAD", "packed-refs", "refs/heads")) {
+        for (path in STAMPED) {
             stamp = stamp * 31 + File(gitDir, path).lastModified()
         }
         return stamp
     }
+
+    /**
+     * Newest timestamp among the stamped files (0 when there is no `.git`
+     * directory). A commit updates them in sequence -- ref lock, reflog,
+     * ref -- so a stamp taken a moment ago may have caught HEAD mid-move.
+     */
+    fun newestChangeMillis(repoDirectory: File): Long {
+        val gitDir = File(repoDirectory, ".git")
+        if (!gitDir.isDirectory) return 0L
+        return STAMPED.maxOf { File(gitDir, it).lastModified() }
+    }
+
+    private val STAMPED = listOf("HEAD", "logs/HEAD", "packed-refs", "refs/heads")
 
     fun invalidateAll() {
         samples.clear()

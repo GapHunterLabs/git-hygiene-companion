@@ -117,8 +117,8 @@ class GitBlameLinePainterTest : BasePlatformTestCase() {
         )
     }
 
-    private fun paintedText(painter: GitBlameLinePainter, file: VirtualFile, line: Int): String? {
-        val deadline = System.currentTimeMillis() + 15_000
+    private fun paintedText(painter: GitBlameLinePainter, file: VirtualFile, line: Int, timeoutMs: Long = 15_000): String? {
+        val deadline = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < deadline) {
             val result = painter.getLineExtensions(project, file, line)
             if (result != null) return result.first().text
@@ -156,6 +156,33 @@ class GitBlameLinePainterTest : BasePlatformTestCase() {
             val afterCommit = paintedText(painter, virtualFile, 1).orEmpty()
             assertTrue("Expected the new commit's author after the commit, got: $afterCommit", afterCommit.contains("Grace Hopper"))
             assertTrue(paintedText(painter, virtualFile, 0).orEmpty().contains("Ada Lovelace"))
+        } finally {
+            repo.delete()
+        }
+    }
+
+    /**
+     * Regression test for a real bug found reviewing the same flow
+     * (2026-09-30): when `git blame` failed -- a new file not committed yet
+     * -- the background task returned without its completion callback, the
+     * file stayed "in flight" forever and was never blamed again in that
+     * session, not even after committing it.
+     */
+    fun `test a new file gets its blame once it is committed`() {
+        val repo = TempGitRepo.create()
+        try {
+            repo.write("README.md", "# billing\n")
+            repo.commitAll("first")
+            val file = repo.write("src/refund.js", "const r = 1;\n")
+            val virtualFile = LocalFileSystem.getInstance().refreshAndFindFileByIoFile(file)!!
+            val painter = GitBlameLinePainter()
+            assertNull("Not committed yet: git blame fails, nothing to paint", paintedText(painter, virtualFile, 0, timeoutMs = 3_000))
+
+            Thread.sleep(50)
+            repo.commitAll("add refund", author = "Grace Hopper", email = "grace@example.com")
+            GitHeadStamp.invalidateAll()
+            val afterCommit = paintedText(painter, virtualFile, 0).orEmpty()
+            assertTrue("Expected the committing author once the file is committed, got: $afterCommit", afterCommit.contains("Grace Hopper"))
         } finally {
             repo.delete()
         }
