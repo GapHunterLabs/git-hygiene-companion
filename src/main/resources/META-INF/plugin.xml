@@ -4,12 +4,16 @@
     <name>Git Hygiene Companion</name>
     <vendor>Gap Hunter Labs</vendor>
     <description><![CDATA[
-        <p>Lightweight inline git blame — author and date at the end of the
-        current line — designed from the ground up to never block the
+        <p>Lightweight inline git blame — author and date at the end of each
+        line — designed from the ground up to never block the
         editor. Every git operation runs off the EDT via a real
         <code>git</code> subprocess, with an aggressive, two-key cache
         (repo HEAD commit + the file's own modification time) so switching
-        files or committing elsewhere never triggers a recompute.</p>
+        between files never triggers a recompute. A commit, checkout or pull
+        moves HEAD and is picked up on the next repaint, recomputed in the
+        background; while a file has unsaved edits its annotations are hidden
+        until it is saved, so a line is never labeled with another line's
+        author.</p>
         <p>No <code>git4idea</code> dependency — shells out to the real
         <code>git</code> binary for everything, keeping the entire git
         interaction surface inside one well-understood, already-proven-safe

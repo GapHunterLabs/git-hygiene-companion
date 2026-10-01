@@ -7,11 +7,13 @@ import com.intellij.openapi.editor.LineExtensionInfo
 import com.intellij.openapi.editor.colors.EditorColorsManager
 import com.intellij.openapi.editor.markup.EffectType
 import com.intellij.openapi.editor.markup.TextAttributes
+import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import dev.gaphunter.githygienecompanion.cache.BlameCache
 import dev.gaphunter.githygienecompanion.cache.HeadCommitCache
+import dev.gaphunter.githygienecompanion.git.GitHeadStamp
 import dev.gaphunter.githygienecompanion.settings.GitHygieneCompanionRuntimeSettings
 import java.io.File
 import java.text.SimpleDateFormat
@@ -49,6 +51,12 @@ class GitBlameLinePainter : EditorLinePainter() {
 
     override fun getLineExtensions(project: Project, file: VirtualFile, lineNumber: Int): Collection<LineExtensionInfo>? {
         if (!GitHygieneCompanionRuntimeSettings.isBlameEnabled()) return null
+        // The cached blame describes the file as saved on disk. With unsaved
+        // edits the editor's lines no longer match it (an inserted line
+        // shifted every annotation below it by one), so nothing is painted
+        // until the file is saved -- the save changes the timestamp and the
+        // blame is recomputed for the saved content.
+        if (FileDocumentManager.getInstance().isFileModified(file)) return null
         val repoDirectory = findRepoRoot(file) ?: return null
         val absolutePath = file.path
         val relativePath = absolutePath.removePrefix(repoDirectory.path).trimStart('/', '\\')
@@ -59,7 +67,9 @@ class GitBlameLinePainter : EditorLinePainter() {
         // repeatedly during manual testing. Only read what
         // GitBlameBackgroundTask has already computed; a miss here just
         // means "no background task has resolved HEAD for this repo yet".
-        val headCommit = HeadCommitCache.get(repoDirectory.path)
+        // A miss also happens once HEAD has moved since it was resolved
+        // (commit, checkout, pull...): the stamp only stats a few files.
+        val headCommit = HeadCommitCache.get(repoDirectory.path, GitHeadStamp.of(repoDirectory))
         if (headCommit == null) {
             scheduleBackgroundBlame(project, repoDirectory, relativePath, absolutePath, file)
             return null
