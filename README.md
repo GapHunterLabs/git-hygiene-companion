@@ -4,6 +4,13 @@ IntelliJ-family plugin. Lightweight inline git blame — author and date
 at the end of each line — designed from the ground up to never
 block the editor.
 
+![Git Hygiene Companion: inline git blame that never blocks the editor](docs/media/hero.gif)
+
+Each feature on its own:
+[Inline blame](docs/media/01-inline-blame.gif) ·
+[Unsaved edits](docs/media/02-unsaved-edits.gif) ·
+[After a commit](docs/media/03-commit.gif)
+
 ## Why it exists
 
 Born from real evidence in GitToolBox's own public issue tracker
