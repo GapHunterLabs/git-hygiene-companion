@@ -31,8 +31,23 @@ class GitBlameBackgroundTask(
     override fun run(indicator: ProgressIndicator) {
         // Stamp taken BEFORE resolving: if HEAD moves in between, the stored
         // stamp is already stale and the next paint resolves HEAD again.
-        val headStamp = GitHeadStamp.compute(repoDirectory)
-        val headCommit = GitHeadResolver.resolve(repoDirectory) ?: return
+        var headStamp = GitHeadStamp.refresh(repoDirectory)
+        var headCommit = GitHeadResolver.resolve(repoDirectory) ?: return
+        // A commit touches the stamped files in sequence (ref lock, reflog,
+        // ref). Right after one, the stamp may have been taken mid-move with
+        // HEAD still on the old commit -- and nothing repaints later to
+        // notice (seen 2026-09-30: the old "Not Committed Yet" stayed on
+        // screen after committing from the IDE). Only when the stamped files
+        // changed in the last moment, wait for them to settle.
+        for (attempt in 0 until SETTLE_ATTEMPTS) {
+            if (System.currentTimeMillis() - GitHeadStamp.newestChangeMillis(repoDirectory) > RECENT_MS) break
+            Thread.sleep(SETTLE_MS)
+            indicator.checkCanceled()
+            val again = GitHeadStamp.refresh(repoDirectory)
+            if (again == headStamp) break
+            headStamp = again
+            headCommit = GitHeadResolver.resolve(repoDirectory) ?: return
+        }
         // Populate HeadCommitCache here -- this is the ONLY place HEAD is
         // ever resolved. GitBlameLinePainter (running on the EDT) only
         // ever reads this cache, never resolves HEAD itself.
@@ -50,9 +65,21 @@ class GitBlameBackgroundTask(
         }
 
         val output = GitBlameRunner.blame(repoDirectory, relativeFilePath)
-        if (output.exitCode != 0) return
-        val lines = GitBlameParser.parse(output.stdout)
+        // A file git can't blame (new, not committed yet) gets an empty
+        // result for this HEAD and timestamp: nothing to paint, no retry on
+        // every repaint, and a retry as soon as either key changes (e.g. the
+        // file is committed). Before 0.1.2 this path returned without
+        // calling onDone, the file stayed "in flight" forever, and its blame
+        // never appeared -- not even after committing it -- until a restart.
+        val lines = if (output.exitCode == 0) GitBlameParser.parse(output.stdout) else emptyList()
         BlameCache.put(absoluteFilePath, headCommit, fileLastModified, lines)
         onDone()
+    }
+
+    private companion object {
+        /** "HEAD moved a moment ago": the stamped files changed within this many milliseconds. */
+        const val RECENT_MS = 2_000L
+        const val SETTLE_MS = 300L
+        const val SETTLE_ATTEMPTS = 5
     }
 }

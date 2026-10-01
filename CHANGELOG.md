@@ -12,7 +12,13 @@
   Yet": HEAD was resolved once per repository and never again. The
   cached HEAD is now tied to a cheap stamp of the files that change
   whenever HEAD moves (commit, checkout, reset, pull), so the blame is
-  recomputed for the new commit.
+  recomputed for the new commit. Right after a commit those files are
+  updated in sequence, so the background task waits for them to settle
+  before trusting the HEAD it read.
+- A new file that wasn't committed yet never got its blame in that
+  session, not even after committing it: the failed `git blame` left the
+  file marked as "in progress" forever. It now gets an empty result for
+  that HEAD, and is blamed again once it is committed.
 - With unsaved edits, every annotation below an inserted or deleted line
   was shifted by one line (each line showed the author of the line above
   it). While a file has unsaved changes the annotations are now hidden;
