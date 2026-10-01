@@ -4,6 +4,22 @@
 
 ## [Unreleased]
 
+## [0.1.2]
+
+### Fixed
+
+- After a commit, the lines it committed kept showing "Not Committed
+  Yet": HEAD was resolved once per repository and never again. The
+  cached HEAD is now tied to a cheap stamp of the files that change
+  whenever HEAD moves (commit, checkout, reset, pull), so the blame is
+  recomputed for the new commit.
+- With unsaved edits, every annotation below an inserted or deleted line
+  was shifted by one line (each line showed the author of the line above
+  it). While a file has unsaved changes the annotations are now hidden;
+  they come back, recomputed, as soon as the file is saved.
+- The listing said the blame appears at the end of the current line; it
+  appears at the end of each line.
+
 ## [0.1.1]
 
 ### Fixed
@@ -29,6 +45,7 @@
   unhurried verification pass this plugin's safety-critical design
   deserves.
 
-[Unreleased]: https://github.com/GapHunterLabs/git-hygiene-companion/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/GapHunterLabs/git-hygiene-companion/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/GapHunterLabs/git-hygiene-companion/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/GapHunterLabs/git-hygiene-companion/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/GapHunterLabs/git-hygiene-companion/commits/0.1.0

@@ -19,13 +19,29 @@ import java.util.concurrent.ConcurrentHashMap
  * fills BlameCache, so no new background work is introduced -- this
  * cache just gives the EDT a safe, synchronous way to read what that
  * task already computed, instead of ever resolving it directly.
+ *
+ * Each entry carries the [dev.gaphunter.githygienecompanion.git.GitHeadStamp]
+ * taken just before HEAD was resolved: once HEAD moves (commit, checkout,
+ * pull...) the stamp no longer matches, [get] misses, and the background
+ * task resolves HEAD again. Before 0.1.2 an entry was never replaced unless
+ * some file's own timestamp changed, so a just-committed line kept showing
+ * "Not Committed Yet".
  */
 object HeadCommitCache {
-    private val cache = ConcurrentHashMap<String, String>()
+    private data class Entry(val headStamp: Long, val headCommit: String)
 
-    fun get(repoPath: String): String? = cache[repoPath]
+    private val cache = ConcurrentHashMap<String, Entry>()
 
-    fun put(repoPath: String, headCommit: String) {
-        cache[repoPath] = headCommit
+    fun get(repoPath: String, headStamp: Long): String? {
+        val entry = cache[repoPath] ?: return null
+        return if (entry.headStamp == headStamp) entry.headCommit else null
+    }
+
+    fun put(repoPath: String, headStamp: Long, headCommit: String) {
+        cache[repoPath] = Entry(headStamp, headCommit)
+    }
+
+    fun invalidateAll() {
+        cache.clear()
     }
 }

@@ -8,6 +8,7 @@ import dev.gaphunter.githygienecompanion.cache.HeadCommitCache
 import dev.gaphunter.githygienecompanion.git.GitBlameParser
 import dev.gaphunter.githygienecompanion.git.GitBlameRunner
 import dev.gaphunter.githygienecompanion.git.GitHeadResolver
+import dev.gaphunter.githygienecompanion.git.GitHeadStamp
 import java.io.File
 
 /**
@@ -28,11 +29,14 @@ class GitBlameBackgroundTask(
 ) : Task.Backgroundable(project, "Computing git blame", false) {
 
     override fun run(indicator: ProgressIndicator) {
+        // Stamp taken BEFORE resolving: if HEAD moves in between, the stored
+        // stamp is already stale and the next paint resolves HEAD again.
+        val headStamp = GitHeadStamp.compute(repoDirectory)
         val headCommit = GitHeadResolver.resolve(repoDirectory) ?: return
         // Populate HeadCommitCache here -- this is the ONLY place HEAD is
         // ever resolved. GitBlameLinePainter (running on the EDT) only
         // ever reads this cache, never resolves HEAD itself.
-        HeadCommitCache.put(repoDirectory.path, headCommit)
+        HeadCommitCache.put(repoDirectory.path, headStamp, headCommit)
         val fileLastModified = File(absoluteFilePath).lastModified()
 
         // Re-check the cache inside the background task itself -- two

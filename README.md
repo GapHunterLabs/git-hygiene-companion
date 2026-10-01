@@ -1,7 +1,7 @@
 # Git Hygiene Companion
 
 IntelliJ-family plugin. Lightweight inline git blame — author and date
-at the end of the current line — designed from the ground up to never
+at the end of each line — designed from the ground up to never
 block the editor.
 
 ## Why it exists
@@ -29,10 +29,22 @@ researching this niche), not assumptions:
 - **A two-key cache, not a naive "recompute on every keystroke."** A
   cached blame result for a file stays valid as long as (a) the repo's
   current HEAD commit hasn't moved AND (b) the file's own last-modified
-  timestamp hasn't changed. Switching to a different file, or committing
-  in a completely unrelated file/module, changes neither key for files
-  that weren't touched — the direct, structural fix for the cited freeze
-  pattern.
+  timestamp hasn't changed. Switching to a different file changes
+  neither key — the direct, structural fix for the cited freeze pattern.
+  A commit, checkout or pull moves HEAD, so the files on screen are
+  re-blamed once, in the background. Whether HEAD moved is checked by
+  stamping a few files under `.git` (`HEAD`, `logs/HEAD`, `packed-refs`,
+  `refs/heads`) at most once a second — file timestamps only, no `git`
+  process on the paint path. (Before 0.1.2 HEAD was resolved once and
+  never again, so a just-committed line kept showing "Not Committed
+  Yet".) A linked worktree or submodule (where `.git` is a file) keeps
+  that older behaviour.
+- **Unsaved edits hide the annotations until the file is saved.** The
+  cached blame describes the file on disk; with unsaved edits an inserted
+  or deleted line would shift every annotation below it onto the wrong
+  line (it did, before 0.1.2). Saving changes key (b) and the blame is
+  recomputed for the saved content, where uncommitted lines show as "Not
+  Committed Yet".
 - **No `git4idea` dependency.** Every git interaction — blame, resolving
   HEAD — shells out to the real `git` binary, keeping the entire
   git-interaction surface inside one well-understood, already-proven-safe
