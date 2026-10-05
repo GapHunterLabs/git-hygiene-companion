@@ -69,10 +69,12 @@ Open any file inside a git repository — inline blame (author, date)
 appears at the end of each line automatically. Toggle it off under
 Settings > Tools > Git Hygiene Companion.
 
-## Enterprise / Team Licensing
+## Support
 
-Need enterprise features, custom git workflows, or team licensing?
-Contact us at **gaphunterlabs@gmail.com**.
+- **Bugs and feature requests:** [GitHub Issues](https://github.com/GapHunterLabs/git-hygiene-companion/issues)
+- **Questions, or custom rules for a team's codebase:** **gaphunterlabs@gmail.com**
+- **Security vulnerabilities:** report privately as described in [SECURITY.md](SECURITY.md), not in a public issue.
+- **Privacy and network behavior:** [PRIVACY.md](PRIVACY.md)
 
 ## Development
 
