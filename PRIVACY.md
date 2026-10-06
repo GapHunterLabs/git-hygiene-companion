@@ -1,6 +1,6 @@
 # Privacy Policy — Git Hygiene Companion
 
-**Effective date:** 2026-08-04
+**Effective date:** 2026-10-06
 
 Git Hygiene Companion is a Gap Hunter Labs plugin for IntelliJ Platform IDEs.
 This policy is short because the plugin's design makes it short: there
@@ -8,9 +8,14 @@ is nothing to disclose beyond what's below.
 
 ## What this plugin collects
 
-**Nothing.** Git Hygiene Companion does not collect, store, transmit, or sell
+**Nothing.** Git Hygiene Companion does not collect, transmit, or sell
 any data — no source code, no file contents, no usage analytics, no
 telemetry, no crash reports, no personally identifiable information.
+
+## What it keeps on your machine
+
+Settings you change for the plugin are saved in the IDE's settings, like any
+other IDE setting, and are never sent anywhere.
 
 ## Network access
 
