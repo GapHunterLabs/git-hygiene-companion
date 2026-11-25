@@ -29,7 +29,7 @@ researching this niche), not assumptions:
 
 - **Every git operation runs off the EDT, by construction, via a real
   `git` subprocess.** Same `GeneralCommandLine`/process-handler pattern
-  already proven in this workspace's React Native Companion (built to
+  already proven in my React Native Companion (built to
   fix an analogous "severely impacting IDE performance" complaint) — this
   is not an optimization bolted onto a design that already blocks, it's
   the structural starting point.
